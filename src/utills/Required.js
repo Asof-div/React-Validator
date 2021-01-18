@@ -1,26 +1,21 @@
-
-
 class Required {
-
-    constructor (msg='') {
+    constructor(msg = '') {
         this.fieldName = '';
-        this.message = msg || `$this.fieldName is required!`;
+        this.message = msg || `${this.fieldName} is required!`;
     }
 
-    validate(name, value, options={}){
-
+    validate(name, value, options = '') {
         this.fieldName = name;
-        if(value == '' || value.length < 1){
+        if (value == '' || value.length < 1) {
             return false;
         }
 
         return true;
     }
 
-    getMessage(){
+    getMessage() {
         return this.message;
     }
-
 }
 
-module.exports = {Required};
+module.exports = { Required };

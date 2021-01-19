@@ -1,31 +1,38 @@
 const { Required } = require('./utills/Required');
 const { Min } = require('./utills/Min');
 const { Max } = require('./utills/Max');
-const { Emails } = require('/utills/Email');
+const { Emails } = require('./utills/Email');
 
 class Validator {
     constructor(validatefields) {
         this.validatefields = validatefields;
         this.errors = [];
         this.errorMessages = [];
+        console.log(this.validatefields);
     }
 
-    validate(values) {
+    validate(name, value) {
+        console.log(name, value);
         try {
-            for (key in this.validatefields) {
+            for (name in this.validatefields) {
+                console.log(name, this.validatefields[name], value);
                 let validations =
-                    typeof this.validatefields[key] == 'string'
-                        ? this.validatefields[key].split('|')
+                    typeof this.validatefields[name] == 'string'
+                        ? this.validatefields[name].split('|')
                         : [];
-
+                console.log(validations);
                 validations.forEach((validation) => {
+                    console.log(validation);
                     let methodName = validation.split(':')[0];
-                    let options = validation.split(':')[1];
-                    let unique = `${key}_${methodName.trim()}`;
+                    let options = validation.includes(':')
+                        ? validation.split(':')[1]
+                        : '';
+                    let unique = `${name}_${methodName.trim()}`;
+                    console.log(methodName, options, unique);
                     switch (methodName.trim()) {
                         case 'required':
                             let required = new Required();
-                            if (required.validate(values[key])) {
+                            if (required.validate(value)) {
                                 this.errors[unique] = false;
                                 delete this.errorMessages[unique];
                             } else {
@@ -36,9 +43,9 @@ class Validator {
                             }
                             break;
                         case 'min':
-                            let msg = `The ${key} field must be at least ${options} characters.`;
+                            let msg = `The ${name} field must be at least ${options} characters.`;
                             let min = new Min(msg);
-                            if (min.validate(key, values[key], options)) {
+                            if (min.validate(name, value, options)) {
                                 this.errors[unique] = false;
                                 delete this.errorMessages[unique];
                             } else {
@@ -47,9 +54,9 @@ class Validator {
                             }
                             break;
                         case 'max':
-                            let msg = `The ${key} field may not be greater than ${options} characters.`;
-                            let max = new Max(msg);
-                            if (max.validate(key, values[key], options)) {
+                            let max_msg = `The ${name} field may not be greater than ${options} characters.`;
+                            let max = new Max(max_msg);
+                            if (max.validate(name, value, options)) {
                                 this.errors[unique] = false;
                                 delete this.errorMessages[unique];
                             } else {
@@ -58,9 +65,9 @@ class Validator {
                             }
                             break;
                         case 'email':
-                            let msg = `The ${key} field must be a valid email.`;
-                            let email = new Emails(msg);
-                            if (email.validate(values[key])) {
+                            let email_msg = `The ${name} field must be a valid email.`;
+                            let email = new Emails(email_msg);
+                            if (email.validate(value)) {
                                 this.errors[unique] = false;
                                 delete this.errorMessages[unique];
                             } else {
@@ -79,4 +86,4 @@ class Validator {
     }
 }
 
-module.exports = { Validator };
+export default Validator;

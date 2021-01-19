@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Asof-div/React-Validator/issues"
   },
-  "homepage": "https://github.com/Asof-div/React-Validator#readme"
+  "homepage": "https://github.com/Asof-div/React-Validator#readme",
+  "dependencies": {
+    "nodemon": "^2.0.7"
+  }
 }

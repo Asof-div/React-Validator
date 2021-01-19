@@ -6,11 +6,11 @@ class Required {
 
     validate(name, value, options = '') {
         this.fieldName = name;
-        if (value == '' || value.length < 1) {
-            return false;
+        if (value && value.length > 0) {
+            return true;
         }
 
-        return true;
+        return false;
     }
 
     getMessage() {

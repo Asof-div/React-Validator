@@ -1,13 +1,18 @@
 class Confirmed {
     constructor(msg = '') {
         this.fieldName = '';
-        this.message =
-            msg || `The ${this.fieldName} confirmation does not match.`;
+        this.message = msg;
     }
 
     validate(name, value, targetValue) {
+        console.log(value, 'password-c');
+        console.log(targetValue, 'password');
         this.fieldName = name;
-        return value === targetValue;
+        if (value !== targetValue) {
+            return false;
+        }
+
+        return true;
     }
 
     getMessage() {

@@ -3,12 +3,14 @@ const { Min } = require('./utills/Min');
 const { Max } = require('./utills/Max');
 const { Emails } = require('./utills/Email');
 const { Confirmed } = require('./utills/Confirmed');
+const { Password } = require('./utills/Password');
 
 class Validator {
     constructor(validateFields) {
         this.validateFields = validateFields;
         this.errors = [];
         this.errorMessages = [];
+        console.log(this.validateFields);
     }
 
     validate(values) {
@@ -28,6 +30,7 @@ class Validator {
                             ? validation.split(':')[1]
                             : '';
                     let unique = `${key}_${methodName.trim()}`;
+
                     switch (methodName.trim()) {
                         case 'required':
                             let required_msg = `The ${key} field is required.`;
@@ -73,7 +76,6 @@ class Validator {
                                     [methodName]: max.getMessage(),
                                 };
                             }
-
                             break;
                         case 'email':
                             let email_msg = `The ${key} field must be a valid email.`;
@@ -91,14 +93,11 @@ class Validator {
                         case 'confirmed':
                             let confirmed_msg = `The ${key} confirmation does not match.`;
                             let confirmed = new Confirmed(confirmed_msg);
-                            let targetValue =
-                                key === password && values[password];
-                            console.log(targetValue, 'target');
                             if (
                                 confirmed.validate(
                                     key,
                                     values[key],
-                                    targetValue
+                                    values['password']
                                 )
                             ) {
                                 this.errors[unique] = false;

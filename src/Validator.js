@@ -30,8 +30,6 @@ class Validator {
                             : '';
                     let paramKey = options.split(',').shift();
                     let paramValue = options.split(',');
-                    console.log(paramKey);
-                    console.log(paramValue);
 
                     let unique = `${key}_${methodName.trim()}`;
 
@@ -119,10 +117,10 @@ class Validator {
                             if (
                                 required_if.validate(
                                     key,
-                                    value[key],
+                                    values[key],
                                     paramKey,
                                     paramValue,
-                                    this.validateFields
+                                    values
                                 )
                             ) {
                                 this.errors[unique] = false;

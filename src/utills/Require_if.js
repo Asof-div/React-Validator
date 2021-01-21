@@ -6,11 +6,10 @@ class Required_if {
         this.message = msg;
     }
 
-    validate(name, value, paramKey, paramValue, fields) {
-        if (_.has(fields, paramKey)) {
+    validate(name, value, paramKey, paramValue, values) {
+        if (_.has(values, paramKey)) {
             paramValue.forEach((arr) => {
-                console.log(arr);
-                if (fields[paramKey] === arr && value && value.length > 0) {
+                if (values[paramKey] === arr && value && value.length > 0) {
                     return true;
                 }
             });

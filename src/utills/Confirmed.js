@@ -5,8 +5,6 @@ class Confirmed {
     }
 
     validate(name, value, targetValue) {
-        console.log(value, 'password-c');
-        console.log(targetValue, 'password');
         this.fieldName = name;
         if (value !== targetValue) {
             return false;

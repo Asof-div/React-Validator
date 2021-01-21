@@ -3,14 +3,13 @@ const { Min } = require('./utills/Min');
 const { Max } = require('./utills/Max');
 const { Emails } = require('./utills/Email');
 const { Confirmed } = require('./utills/Confirmed');
-const { Password } = require('./utills/Password');
+const { Required_if } = require('./utills/Require_if');
 
 class Validator {
     constructor(validateFields) {
         this.validateFields = validateFields;
         this.errors = [];
         this.errorMessages = [];
-        console.log(this.validateFields);
     }
 
     validate(values) {
@@ -29,6 +28,11 @@ class Validator {
                         validation.split(':').length > 1
                             ? validation.split(':')[1]
                             : '';
+                    let paramKey = options.split(',').shift();
+                    let paramValue = options.split(',');
+                    console.log(paramKey);
+                    console.log(paramValue);
+
                     let unique = `${key}_${methodName.trim()}`;
 
                     switch (methodName.trim()) {
@@ -106,6 +110,27 @@ class Validator {
                                 this.errors[unique] = true;
                                 this.errorMessages[key] = {
                                     [methodName]: confirmed.getMessage(),
+                                };
+                            }
+                            break;
+                        case 'required-if':
+                            let required_if_msg = `The ${key} field is required when the ${paramKey} field has value.`;
+                            let required_if = new Required_if(required_if_msg);
+                            if (
+                                required_if.validate(
+                                    key,
+                                    value[key],
+                                    paramKey,
+                                    paramValue,
+                                    this.validateFields
+                                )
+                            ) {
+                                this.errors[unique] = false;
+                                delete this.errorMessages[unique];
+                            } else {
+                                this.errors[unique] = true;
+                                this.errorMessages[key] = {
+                                    [methodName]: required_if.getMessage(),
                                 };
                             }
                             break;

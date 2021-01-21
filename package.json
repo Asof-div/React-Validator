@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/Asof-div/React-Validator#readme",
   "dependencies": {
+    "lodash": "^4.17.20",
     "nodemon": "^2.0.7"
   },
   "description": ""

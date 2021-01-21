@@ -3,6 +3,7 @@ const { Validator } = require('./src/Validator');
 let fields = {
     name: 'required|min:2|max:5',
     email: 'required',
+    lastName: 'required_if:name,naomi,justine,you',
     password: 'required|min:8|max:25',
     password_confirmation: 'confirmed',
 };
@@ -10,9 +11,10 @@ let fields = {
 let validate = new Validator(fields);
 
 form = {
-    name: '',
+    name: 'you',
     // email: 'olagmailcom',
-    password: 'nonameyou',
+    password: 'nou',
+    lastName: 'you',
     password_confirmation: 'nonameyou',
 };
 

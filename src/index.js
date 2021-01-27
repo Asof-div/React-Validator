@@ -7,7 +7,7 @@ const { Confirmed } = require('./utills/Confirmed');
 const { RequiredIf } = require('./utills/RequiredIf');
 
 class Validator {
-    
+
     constructor(validateFields) {
         this.validateFields = validateFields;
         this.attributes = Object.keys(validateFields);
@@ -147,4 +147,4 @@ class Validator {
     
 }
 
-module.exports = { Validator };
+module.exports = Validator;

@@ -1,17 +1,21 @@
-class Max {
+const { Rule } = require("./Rule");
+class Max extends Rule {
     constructor(msg = '') {
+        super(msg);
+        this.rule = 'max'
         this.fieldName = '';
-        this.message = msg;
+        this.msg = msg;
+        this.hasError = false;
     }
 
-    validate(name, value, options = '') {
+    validate(name, values, options = '') {
+        let value = values[name];
         this.fieldName = name;
-        return value.length <= Number(options);
+        let status = value.length <= Number(options);
+        this.hasError = !status;
+        return status;
     }
-
-    getMessage() {
-        return this.message;
-    }
+    
 }
 
 module.exports = { Max };

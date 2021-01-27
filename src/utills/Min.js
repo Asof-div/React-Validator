@@ -1,17 +1,22 @@
-class Min {
+const { Rule } = require("./Rule");
+class Min extends Rule {
     constructor(msg = '') {
+        super(msg);
+        this.rule = 'min'
         this.fieldName = '';
-        this.message = msg;
+        this.msg = msg;
+        this.hasError = false;
     }
 
-    validate(name, value, options = '') {
+
+    validate(name, values, options = '') {
+        let value = values[name];
         this.fieldName = name;
-        return value.length >= Number(options);
+        const status = value.length >= Number(options);
+        this.hasError = !status;
+        return status;
     }
 
-    getMessage() {
-        return this.message;
-    }
 }
 
 module.exports = { Min };

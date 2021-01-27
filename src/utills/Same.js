@@ -1,9 +1,9 @@
 const { Rule } = require("./Rule");
 
-class Confirmed extends Rule{
+class Same extends Rule{
     constructor(msg = '') {
         super(msg);
-        this.rule = 'confirmed'
+        this.rule = 'same'
         this.fieldName = '';
         this.msg = msg;
         this.hasError = false;
@@ -13,9 +13,9 @@ class Confirmed extends Rule{
         let value = values[name];
         this.fieldName = name;
         const params = options.split(',');
-        const targetName = params.length > 0 ? params[0] : `${name}_confirmation`;
+        const targetName = params.length > 0 && params[0];
         const targetValue = values[targetName];
-        this.fieldName = name;
+        
         if(!value || !targetValue){
             return false;
         }
@@ -31,4 +31,4 @@ class Confirmed extends Rule{
 
 }
 
-module.exports = { Confirmed };
+module.exports = { Same };

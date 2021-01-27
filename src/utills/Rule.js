@@ -15,7 +15,7 @@ class Rule {
     }
 
     getError(){
-        return this.hasError ? {msg: this.msg, field: this.fieldName, rule: this.rule} : undefined;
+        return this.hasError ? {msg: this.msg.ucFirst(), field: this.fieldName, rule: this.rule} : undefined;
     }
 
 }

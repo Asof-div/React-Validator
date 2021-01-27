@@ -1,5 +1,5 @@
 {
-    "name": "@am_smartlife/input-validator",
+    "name": "form-input-validator",
     "version": "1.0.0",
     "description" : "This is an input validator inspired by laravel it can be use in any javascript framework",
     "main": "src/index.js",

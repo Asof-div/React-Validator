@@ -1,17 +1,22 @@
-class Emails {
+const { Rule } = require("./Rule");
+class Email extends Rule {
     constructor(msg = '') {
+        super(msg);
+        this.rule = 'email';
         this.fieldName = '';
-        this.message = msg;
+        this.msg =  msg;
+        this.hasError = false;
     }
 
-    validate(name, value, options = '') {
+    validate(name, values, options = '') {
+        let value = values[name];
         this.fieldName = name;
-        return /\S+@\S+\.\S+/.test(value);
+        let status = /\S+@\S+\.\S+/.test(value);
+        this.hasError = !status;
+        return status;
     }
 
-    getMessage() {
-        return this.message;
-    }
+
 }
 
-module.exports = { Emails };
+module.exports = { Email };

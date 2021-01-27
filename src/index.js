@@ -26,11 +26,11 @@ class Validator {
                 if (field in this.validateFields) {
                     this.formData = {...this.formData, [field]: value}
                     this.generate(field, this.formData)
-                    console.log(field, 'inside', this.errors.has(field))
+
                     if(this.errors.has(field)){
                         return resolve(false);
                     }
-                    console.log(field, 'inside', this.errors.any())
+
                     return resolve(true);
                 }
 
@@ -53,6 +53,7 @@ class Validator {
                 if(this.errors.any()){
                     return resolve(false);
                 }
+                
                 return resolve(true)
 
             } catch (e) {

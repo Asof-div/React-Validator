@@ -13,7 +13,7 @@ This is an input validator inspired by laravel
 
 #Example
 
-`
+```
 let rules = {
     name: "required|min:3|max:10",
     email: "required|email",
@@ -65,4 +65,4 @@ errors.has('name') * return true if name failed validation rule or false if no e
 
 errors.first('name'); * return error message or indefined where error does not exists*
 
-`
+```

@@ -1,10 +1,8 @@
 class ErrorBag {
 
-    #attributes;
-
     constructor(attributes) {
         this.items = [];
-        this.#attributes = attributes;
+        this.attributes = attributes;
     }
 
     add(error={field:"", msg:"", rule:""}){
@@ -16,11 +14,11 @@ class ErrorBag {
 
         }else if(error.field && error.msg && error.msg.length > 1 && error.field.length > 0){
             let id = '';
-            if(this.#attributes.indexOf(error.field) >= 0){
-                id = this.#attributes.indexOf(error.field) + 1;
+            if(this.attributes.indexOf(error.field) >= 0){
+                id = this.attributes.indexOf(error.field) + 1;
             }else{
-                this.#attributes = [...this.#attributes, error.field];
-                id = this.#attributes.indexOf(error.field) + 1;
+                this.attributes = [...this.attributes, error.field];
+                id = this.attributes.indexOf(error.field) + 1;
             }
             this.items = [...this.items, {...error, id}];
         }
@@ -32,7 +30,7 @@ class ErrorBag {
     }
 
     any(){
-        this.#attributes.forEach(val => {
+        this.attributes.forEach(val => {
             if(this.has(val)){
                 return true;
             }

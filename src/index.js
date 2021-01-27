@@ -1,11 +1,36 @@
-const { ErrorBag } = require('./utills/ErrorBag');
-const { Required } = require('./utills/Required');
-const { Min } = require('./utills/Min');
-const { Max } = require('./utills/Max');
-const { Email } = require('./utills/Email');
-const { Confirmed } = require('./utills/Confirmed');
-const { RequiredIf } = require('./utills/RequiredIf');
+const {
+    Alpha,
+    AlphaNum,
+    AlphaNumPunct,
+    Confirmed,
+    Email,
+    ErrorBag,
+    File,
+    In,
+    Max,
+    Min,
+    NotIn,
+    NumberRule,
+    Required,
+    RequiredIf,
+    Same
+} = require('./utills');
 
+String.prototype.fromSlug = function () {
+    return this.replace(/[-_]/g, ' ');
+}
+
+String.prototype.capitalize = function () {
+    return this.replace(/^\w|\s\w/g, (match) => {
+        return match.toUpperCase();
+    });
+}
+
+String.prototype.ucFirst = function () {
+    return this.replace(/^\w/g, (match) => {
+        return match.toUpperCase();
+    });
+}
 class Validator {
 
     constructor(validateFields) {
@@ -53,7 +78,7 @@ class Validator {
                 if(this.errors.any()){
                     return resolve(false);
                 }
-                
+
                 return resolve(true)
 
             } catch (e) {
@@ -76,18 +101,86 @@ class Validator {
             let options = validation.includes(':') && validation.split(':').length > 1
                                 ? validation.split(':')[1]
                                 : '';
+            let splitOptions = [];
 
             switch (methodName.trim()) {
-                case 'required':
+                case 'alpha':
 
-                    let requiredValidator = new Required(`The ${this.fieldName} field is required.`);
+                    let alphaValidator = new Alpha(`The ${field} field can only contain letters.`);
                     
-                    if (!requiredValidator.validate(field, formdata)) {
+                    if (!alphaValidator.validate(field, formdata, options)) {
                     
-                        this.errors.add(requiredValidator.getError());
+                        this.errors.add(alphaValidator.getError());
                     
                     }
+                    break;
+                case 'alpha_num':
 
+                    let alphaNumValidator = new AlphaNum(`The ${field} field must contain letters and numbers.`);
+                    
+                    if (!alphaNumValidator.validate(field, formdata, options)) {
+                    
+                        this.errors.add(alphaNumValidator.getError());
+                    
+                    }
+                    break;
+                case 'alpha_num_punct':
+
+                    let alphaNumPunctValidator = new AlphaNumPunct(`The ${field} field must contain letters, numbers and punctuations.`);
+                    
+                    if (!alphaNumPunctValidator.validate(field, formdata, options)) {
+                    
+                        this.errors.add(alphaNumPunctValidator.getError());
+                    
+                    }
+                    break;
+
+                case 'confirmed':
+                    let confirmedValidator = new Confirmed(`The ${field} confirmation does not match.`);
+
+                    if (!confirmedValidator.validate(field, formdata, options)) {
+                        
+                        this.errors.add(confirmedValidator.getError());
+                        
+
+                    }
+                    break;
+                case 'email':
+                    let emailValidator = new Email(`The ${field} field must be a valid email.`);
+                    
+                    if (!emailValidator.validate(field, formdata, options)) {
+                        
+                        this.errors.add(emailValidator.getError());
+                    }
+                    break;
+                case 'file':
+                    let fileValidator = new File(`The ${field} field must be a valid file type.`);
+                    
+                    if (!fileValidator.validate(field, formdata, options)) {
+                        
+                        this.errors.add(fileValidator.getError());
+                    }
+                    break;
+                case 'in':
+                    splitOptions = options.split(',');
+
+                    let inValidator = new In(`The ${field} field has to contain any of these ${splitOptions.join(', ')}.`);
+                    
+                    if (!inValidator.validate(field, formdata, options)) {
+                        
+                        this.errors.add(inValidator.getError());
+                    }
+                    break;
+                
+                case 'max':
+                    
+                    let maxValidator = new Max(`The ${field} field may not be greater than ${options} characters.`);
+
+                    if (!maxValidator.validate(field, formdata, options)) {
+                        
+                        this.errors.add(maxValidator.getError());
+                        
+                    }
                     break;
                 case 'min':
                     
@@ -100,32 +193,33 @@ class Validator {
                     }
 
                     break;
-                case 'max':
-                    
-                    let maxValidator = new Max(`The ${field} field may not be greater than ${options} characters.`);
+                case 'not_in':
+                    splitOptions = options.split(',');
 
-                    if (!maxValidator.validate(field, formdata, options)) {
+                    let notInValidator = new NotIn(`The ${field} field cannot contain any of these ${splitOptions.join(', ')}.`);
+                    
+                    if (!notInValidator.validate(field, formdata, options)) {
                         
-                        this.errors.add(maxValidator.getError());
-                        
+                        this.errors.add(notInValidator.getError());
                     }
                     break;
-                case 'email':
-                    let emailValidator = new Email(`The ${field} field must be a valid email.`);
+                
+                case 'number':
+
+                    let numberValidator = new NumberRule(`The ${field} field can only contain numbers.`);
                     
-                    if (!emailValidator.validate(field, formdata, options)) {
+                    if (!numberValidator.validate(field, formdata, options)) {
                         
-                        this.errors.add(emailValidator.getError());
+                        this.errors.add(numberValidator.getError());
                     }
                     break;
-                case 'confirmed':
-                    let confirmedValidator = new Confirmed(`The ${field} confirmation does not match.`);
+                case 'required':
 
-                    if (!confirmedValidator.validate(field, formdata, options)) {
-                        
-                        this.errors.add(confirmedValidator.getError());
-                        
-
+                    let requiredValidator = new Required(`The ${field} field is required.`);
+                    
+                    if (!requiredValidator.validate(field, formdata)) {
+                    
+                        this.errors.add(requiredValidator.getError());
                     }
                     break;
                 case 'required_if':
@@ -136,6 +230,20 @@ class Validator {
                 
                     if (!requiredIfValidator.validate(field, formdata, options)) {
                         this.errors.add(requiredIfValidator.getError());
+                        
+                    }
+                    break;
+
+                case 'same':
+
+                    const params = options.split(',');
+                    const targetName = params.length > 0 && params[0];
+
+                    let sameValidator = new Same(`The ${field} field should the same as the ${targetName} field`);
+
+                    if (!sameValidator.validate(field, formdata, options)) {
+                        
+                        this.errors.add(sameValidator.getError());
                         
                     }
                     break;

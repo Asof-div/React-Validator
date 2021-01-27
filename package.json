@@ -11,14 +11,12 @@
         "type": "git",
         "url": "git+https://github.com/Asof-div/React-Validator.git"
     },
-    "author": "Abiodu Adeyinka",
-    "license": "ISC",
+    "author": "Abiodun Adeyinka",
+    "license": "MIT",
     "bugs": {
         "url": "https://github.com/Asof-div/React-Validator/issues"
     },
     "homepage": "https://github.com/Asof-div/React-Validator#readme",
-    "dependencies": {
-        "nodemon": "^2.0.7"
-    },
-    "devDependencies": {},
+    "dependencies": {},
+    "devDependencies": {}
 }

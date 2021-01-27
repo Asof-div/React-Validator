@@ -1,25 +1,24 @@
 {
-    "name": "@techmadeeazy/react-validator",
+    "name": "@am_smartlife/input-validator",
     "version": "1.0.0",
-    "main": "index.js",
-    "scripts": {
-        "start": "nodemon index.js",
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
+    "description" : "This is an input validator inspired by laravel it can be use in any javascript framework",
+    "main": "src/index.js",
+    "keywords": [
+        "validation",
+        "input validation"
+    ],
     "repository": {
         "type": "git",
         "url": "git+https://github.com/Asof-div/React-Validator.git"
     },
-    "author": "",
+    "author": "Abiodu Adeyinka",
     "license": "ISC",
     "bugs": {
         "url": "https://github.com/Asof-div/React-Validator/issues"
     },
     "homepage": "https://github.com/Asof-div/React-Validator#readme",
     "dependencies": {
-        "lodash": "^4.17.20",
         "nodemon": "^2.0.7"
     },
     "devDependencies": {},
-    "description": ""
 }

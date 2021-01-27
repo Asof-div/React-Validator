@@ -7,14 +7,14 @@ const { Confirmed } = require('./utills/Confirmed');
 const { RequiredIf } = require('./utills/RequiredIf');
 
 class Validator {
-    #formData
+
     constructor(validateFields) {
         this.validateFields = validateFields;
         this.attributes = Object.keys(validateFields);
         this.errors = new ErrorBag(this.attributes);
-        this.#formData = {};
+        this.formData = {};
         this.attributes.forEach(val => {
-            this.#formData[val] = '';
+            this.formData[val] = '';
         })
         
     }
@@ -24,13 +24,13 @@ class Validator {
             try {
                 
                 if (field in this.validateFields) {
-                    this.#formData = {...this.#formData, [field]: value}
-                    this.generate(field, this.#formData)
-                    console.log(field, 'inside', this.errors.has(field))
+                    this.formData = {...this.formData, [field]: value}
+                    this.generate(field, this.formData)
+
                     if(this.errors.has(field)){
                         return resolve(false);
                     }
-                    console.log(field, 'inside', this.errors.any())
+
                     return resolve(true);
                 }
 
@@ -46,13 +46,14 @@ class Validator {
 
             try {
                 for (const field in this.validateFields) {
-                    this.#formData = {...this.#formData, [field]: values[field]}
+                    this.formData = {...this.formData, [field]: values[field]}
                     this.generate(field, values)
                 }
 
                 if(this.errors.any()){
                     return resolve(false);
                 }
+                
                 return resolve(true)
 
             } catch (e) {
@@ -147,4 +148,4 @@ class Validator {
     
 }
 
-module.exports = { Validator };
+module.exports = Validator;

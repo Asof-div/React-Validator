@@ -1,4 +1,4 @@
-const { Validator } = require('../src');
+const Validator  = require('../src');
 
 let rules = {
     name: 'required|min:3|max:10',

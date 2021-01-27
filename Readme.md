@@ -1,19 +1,19 @@
-#Input Validator
+##Input Validator
 
 This is an input validator inspired by laravel
 
-#Features
+###Features
 
-1. Required
-2. Min
-3. Max
-4. Email
-5. Required If
-6. Confirmed 
+-   Required
+-   Min
+-   Max
+-   Email
+-   Required If
+-   Confirmed
 
-#Example
+###Example
 
-`
+```
 let rules = {
     name: "required|min:3|max:10",
     email: "required|email",
@@ -65,4 +65,4 @@ errors.has('name') * return true if name failed validation rule or false if no e
 
 errors.first('name'); * return error message or indefined where error does not exists*
 
-`
+```

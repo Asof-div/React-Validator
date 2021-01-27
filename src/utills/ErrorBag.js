@@ -5,7 +5,7 @@ class ErrorBag {
         this.attributes = attributes;
     }
 
-    add(error={field:"", msg:"", rule:""}){
+    addError(error={field:"", msg:"", rule:""}){
         if(!error) return 
         const item = this.items.find(item => item.field === error.field && error.msg)
         if(item){
@@ -23,6 +23,13 @@ class ErrorBag {
             this.items = [...this.items, {...error, id}];
         }
 
+    }
+
+    add(field="", msg="", rule=""){
+        if(!field || !msg) return 
+        const error = {field, msg, rule};
+        
+        this.addError(error);
     }
 
     all(){

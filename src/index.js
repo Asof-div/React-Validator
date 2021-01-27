@@ -110,7 +110,7 @@ class Validator {
                     
                     if (!alphaValidator.validate(field, formdata, options)) {
                     
-                        this.errors.add(alphaValidator.getError());
+                        this.errors.addError(alphaValidator.getError());
                     
                     }
                     break;
@@ -120,7 +120,7 @@ class Validator {
                     
                     if (!alphaNumValidator.validate(field, formdata, options)) {
                     
-                        this.errors.add(alphaNumValidator.getError());
+                        this.errors.addError(alphaNumValidator.getError());
                     
                     }
                     break;
@@ -130,7 +130,7 @@ class Validator {
                     
                     if (!alphaNumPunctValidator.validate(field, formdata, options)) {
                     
-                        this.errors.add(alphaNumPunctValidator.getError());
+                        this.errors.addError(alphaNumPunctValidator.getError());
                     
                     }
                     break;
@@ -140,7 +140,7 @@ class Validator {
 
                     if (!confirmedValidator.validate(field, formdata, options)) {
                         
-                        this.errors.add(confirmedValidator.getError());
+                        this.errors.addError(confirmedValidator.getError());
                         
 
                     }
@@ -150,7 +150,7 @@ class Validator {
                     
                     if (!emailValidator.validate(field, formdata, options)) {
                         
-                        this.errors.add(emailValidator.getError());
+                        this.errors.addError(emailValidator.getError());
                     }
                     break;
                 case 'file':
@@ -158,7 +158,7 @@ class Validator {
                     
                     if (!fileValidator.validate(field, formdata, options)) {
                         
-                        this.errors.add(fileValidator.getError());
+                        this.errors.addError(fileValidator.getError());
                     }
                     break;
                 case 'in':
@@ -168,7 +168,7 @@ class Validator {
                     
                     if (!inValidator.validate(field, formdata, options)) {
                         
-                        this.errors.add(inValidator.getError());
+                        this.errors.addError(inValidator.getError());
                     }
                     break;
                 
@@ -178,7 +178,7 @@ class Validator {
 
                     if (!maxValidator.validate(field, formdata, options)) {
                         
-                        this.errors.add(maxValidator.getError());
+                        this.errors.addError(maxValidator.getError());
                         
                     }
                     break;
@@ -188,7 +188,7 @@ class Validator {
                     
                     if (!minValidator.validate(field, formdata, options)) {
                         
-                        this.errors.add(minValidator.getError());
+                        this.errors.addError(minValidator.getError());
                         
                     }
 
@@ -200,7 +200,7 @@ class Validator {
                     
                     if (!notInValidator.validate(field, formdata, options)) {
                         
-                        this.errors.add(notInValidator.getError());
+                        this.errors.addError(notInValidator.getError());
                     }
                     break;
                 
@@ -210,7 +210,7 @@ class Validator {
                     
                     if (!numberValidator.validate(field, formdata, options)) {
                         
-                        this.errors.add(numberValidator.getError());
+                        this.errors.addError(numberValidator.getError());
                     }
                     break;
                 case 'required':
@@ -219,7 +219,7 @@ class Validator {
                     
                     if (!requiredValidator.validate(field, formdata)) {
                     
-                        this.errors.add(requiredValidator.getError());
+                        this.errors.addError(requiredValidator.getError());
                     }
                     break;
                 case 'required_if':
@@ -229,7 +229,7 @@ class Validator {
                     let requiredIfValidator = new RequiredIf(`The ${field} field is required when the ${paramKey} field has value.`);
                 
                     if (!requiredIfValidator.validate(field, formdata, options)) {
-                        this.errors.add(requiredIfValidator.getError());
+                        this.errors.addError(requiredIfValidator.getError());
                         
                     }
                     break;
@@ -243,9 +243,10 @@ class Validator {
 
                     if (!sameValidator.validate(field, formdata, options)) {
                         
-                        this.errors.add(sameValidator.getError());
+                        this.errors.addError(sameValidator.getError());
                         
                     }
+                    
                     break;
                 default:
                     break;

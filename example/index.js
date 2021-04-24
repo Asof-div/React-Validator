@@ -7,7 +7,8 @@ let rules = {
     lastName: "required_if:name,naomi",
     password: "required|min:8|max:25|alpha_num_punct|confirmed:password_confirmation",
     password_confirmation: "required",
-    pin: "required|number"
+    pin: "required"
+
 };
 
 
@@ -19,7 +20,7 @@ form = {
     password: "passcom123@",
     lastName: null,
     password_confirmation: "passcom123@",
-    pin: "2333",
+    pin: 2,
     username: "a"
 };
 

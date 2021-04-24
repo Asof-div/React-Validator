@@ -5,7 +5,7 @@ class ErrorBag {
         this.attributes = attributes;
     }
 
-    add(error={field:"", msg:"", rule:""}){
+    addError(error={field:"", msg:"", rule:""}){
         if(!error) return 
         const item = this.items.find(item => item.field === error.field && error.msg)
         if(item){
@@ -25,17 +25,26 @@ class ErrorBag {
 
     }
 
+    add(field="", msg="", rule=""){
+        if(!field || !msg) return 
+        const error = {field, msg, rule};
+        
+        this.addError(error);
+    }
+
     all(){
 
     }
 
     any(){
+        let status = false;
         this.attributes.forEach(val => {
             if(this.has(val)){
-                return true;
+                status = true;
+                break;
             }
         });
-        return false;
+        return status;
     }
 
     clear() {

@@ -37,12 +37,14 @@ class ErrorBag {
     }
 
     any(){
+        let status = false;
         this.attributes.forEach(val => {
             if(this.has(val)){
-                return true;
+                status = true;
+                break;
             }
         });
-        return false;
+        return status;
     }
 
     clear() {

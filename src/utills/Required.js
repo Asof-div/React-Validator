@@ -11,7 +11,14 @@ class Required extends Rule {
     validate(name, values, options = '') {
         let value = values[name];
         this.fieldName = name;
-        if (value && value.length > 0) {
+  
+        if (typeof value == "number" && value.toString().length > 0) {
+            this.hasError = false;
+            return true;
+        }else if (typeof value == "string" && value !== undefined && value.length > 0) {
+            this.hasError = false;
+            return true;
+        }else if(typeof value == "object" && Object.keys(value).length > 0 ){
             this.hasError = false;
             return true;
         }
